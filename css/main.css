@@ -1946,7 +1946,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #01ff0e;
+  background: #44ff4b;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -3178,7 +3178,7 @@ body {
 }
 code {
   color: #fff;
-  background: #0f0f0f;
+  background: #8b8878;
   margin: 2px;
 }
 .highlight,
