@@ -1946,7 +1946,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ac9d99;
+  background: #ffd;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2872,13 +2872,13 @@ img:hover {
   padding-right: 260px;
 }
 header {
-  width: 90% !important;
+  width: 60% !important;
 }
 header.post-header {
   width: auto !important;
 }
 .container .main-inner {
-  width: 90%;
+  width: 60%;
 }
 .content-wrap {
   width: calc(100% - 260px);
@@ -3162,4 +3162,10 @@ header.post-header {
   padding: 25px;
   -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
+}
+body {
+  background: url("/images/bg.jpg");
+  background-size: auto;
+  background-attachment: fixed;
+  background-position: 50% 50%;
 }
