@@ -2056,7 +2056,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #71ba81;
+  background: #fffc25;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2151,7 +2151,6 @@ img:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: justify;
-  white-space: nowrap;
   line-height: 1.8;
 }
 .post-toc .nav .nav-child {
@@ -3302,12 +3301,6 @@ code,
 pre {
   border: 1px solid #d6d6d6;
 }
-#days {
-  display: block;
-  color: #07b39b;
-  font-size: 13px;
-  margin-top: 15px;
-}
 img.img-topic {
   width: 100%;
 }
@@ -3420,4 +3413,29 @@ figcaption {
   margin-top: 20px;
   text-align: center;
   background-color: #fff;
+}
+.logo-line-before i,
+.logo-line-after i {
+  position: relative;
+  display: block;
+  height: 2px;
+  background: #333;
+}
+.post-sticky-flag {
+  font-size: inherit;
+  float: left;
+  color: #000;
+  cursor: help;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+}
+.post-sticky-flag:hover {
+  color: #07b39b;
+}
+days {
+  display: block;
+  color: #07b39b;
+  font-size: 13px;
+  margin-top: 15px;
 }
