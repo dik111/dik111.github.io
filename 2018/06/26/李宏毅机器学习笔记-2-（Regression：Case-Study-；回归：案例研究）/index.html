@@ -77,7 +77,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="机器学习," />
 
 
 
@@ -90,17 +90,32 @@
 
 
 
-<meta name="description" content="Hi,欢迎来到我的博客,我将在这里分享技术以及生活！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="这是最近学习李宏毅老师机器学习入门的第一篇学习笔记。">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="李宏毅机器学习笔记-2 （Regression：Case Study ；回归：案例研究）">
+<meta property="og:url" content="http://yoursite.com/2018/06/26/李宏毅机器学习笔记-2-（Regression：Case-Study-；回归：案例研究）/index.html">
 <meta property="og:site_name" content="dik&#39;s Blog">
-<meta property="og:description" content="Hi,欢迎来到我的博客,我将在这里分享技术以及生活！">
+<meta property="og:description" content="这是最近学习李宏毅老师机器学习入门的第一篇学习笔记。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-23T15:34:53.521Z">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180626/DbEKa15F6H.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/ag4Ch54Im0.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/f9FiG60Ab3.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/BhlKFH27KE.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/j68LdEI3dI.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/c0fikGF2DA.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/i3eBFegkbg.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/9IKDCEfK56.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/L4Gh3cgfm7.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/Ae4g6bEfKK.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/C7C7Ad87eD.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/DHJj85dL4K.png?imageslim">
+<meta property="og:image" content="http://pav10d59g.bkt.clouddn.com/blog/180627/Cc02gFb7aE.png?imageslim">
+<meta property="og:updated_time" content="2018-06-27T15:10:01.886Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
-<meta name="twitter:description" content="Hi,欢迎来到我的博客,我将在这里分享技术以及生活！">
+<meta name="twitter:title" content="李宏毅机器学习笔记-2 （Regression：Case Study ；回归：案例研究）">
+<meta name="twitter:description" content="这是最近学习李宏毅老师机器学习入门的第一篇学习笔记。">
+<meta name="twitter:image" content="http://pav10d59g.bkt.clouddn.com/blog/180626/DbEKa15F6H.png?imageslim">
 
 
 
@@ -130,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/26/李宏毅机器学习笔记-2-（Regression：Case-Study-；回归：案例研究）/"/>
 
 
 
 
 
-  <title>about | dik's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>李宏毅机器学习笔记-2 （Regression：Case Study ；回归：案例研究） | dik's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -305,33 +320,339 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/26/李宏毅机器学习笔记-2-（Regression：Case-Study-；回归：案例研究）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dik">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dik's Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <h2 id="Hi-欢迎来到我的博客-我将在这里分享技术以及生活！"><a href="#Hi-欢迎来到我的博客-我将在这里分享技术以及生活！" class="headerlink" title="Hi,欢迎来到我的博客,我将在这里分享技术以及生活！"></a>Hi,欢迎来到我的博客,我将在这里分享技术以及生活！</h2>
+          <h1 class="post-title" itemprop="name headline">李宏毅机器学习笔记-2 （Regression：Case Study ；回归：案例研究）</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T22:36:43+08:00">
+                2018-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/26/李宏毅机器学习笔记-2-（Regression：Case-Study-；回归：案例研究）/" class="leancloud_visitors" data-flag-title="李宏毅机器学习笔记-2 （Regression：Case Study ；回归：案例研究）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+             
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,448
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  这是最近学习李宏毅老师机器学习入门的第一篇学习笔记。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p class="description"></p>
+
+
+
+<a id="more"></a>
+<h2 id="Regression-pokemons"><a href="#Regression-pokemons" class="headerlink" title="Regression-pokemons"></a>Regression-pokemons</h2><p>李老师在这一节课程开始介绍了用Regression，预测预测宝可梦（<br>pokemons）进化后过的CP值（战斗力）。<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180626/DbEKa15F6H.png?imageslim" alt="mark"><br>我们的目标是找出上帝函数’f’,通过imput一只宝可梦进化前的cp值，output他进化后的cp值。</p>
+<h2 id="Step1-选择Model"><a href="#Step1-选择Model" class="headerlink" title="Step1 选择Model"></a>Step1 选择Model</h2><p>在这里李老师建立以个Linear model:<br> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> y = b + w * x</span><br><span class="line">它是infinite的……</span><br><span class="line">可能为f1: y = <span class="number">10.0</span> + <span class="number">9.0</span> ∙ x</span><br><span class="line">可能为f2: y = <span class="number">9.8</span> + <span class="number">9.2</span> ∙ x</span><br><span class="line">可能为f3: y = - <span class="number">0.8</span> - <span class="number">1.2</span> ∙ x</span><br><span class="line">……</span><br></pre></td></tr></table></figure></p>
+<p>不同的b和w都会得到不同的f，而我们的目标就是找出一个最合适的f。</p>
+<h2 id="Step2-Goodness-of-function"><a href="#Step2-Goodness-of-function" class="headerlink" title="Step2 Goodness of function"></a>Step2 Goodness of function</h2><p>当我们将准备好的training data（已知10个宝可梦的进化情况），建立一个二维坐标轴。<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/ag4Ch54Im0.png?imageslim" alt="mark"></p>
+<p>通过上图可以看出，似乎有一个函数能够拟合这些坐标点，而这就是我们想要的，为了选出最契合的 f ，我们要建立一个Loss function L ，也就是函数的函数。</p>
+<ul>
+<li>如果我们将 f 的 w 和 b 作为两轴，则在下图中每一点都代表一个 function f ，而颜色代表output的大小，也就代表该function f 参数的好坏。易理解，smallest点做对应的函数 f 就是我们想要的。</li>
+</ul>
+<p><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/f9FiG60Ab3.png?imageslim" alt="mark"></p>
+<h2 id="Step3-Best-Function"><a href="#Step3-Best-Function" class="headerlink" title="Step3 Best Function"></a>Step3 Best Function</h2><p>在lossfuction建立之后，我们需要通过这些这些lossfuction找到最合适的Best fuction,在这里，我们通过线性代数的基本公式来直接计算出最佳的w和b。</p>
+<p><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/BhlKFH27KE.png?imageslim" alt="mark"><br>这种方法适用于单一特征的问题，但现实中，我们的问题往往是涉及到多个特征的，这时，则需要我们用更有效fuction,这里，李老师介绍了梯度下降法进行计算。<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/j68LdEI3dI.png?imageslim" alt="mark"><br>首先我们需要随机选取一个w0,计算其斜率，如果为正，则减小w，如果为负，则增大w。而这有另一个问题，每次要增加或减少多少w值呢，有两个因素影响。第一，即微分值，如果微分值很大或很小，表示此处非常陡峭，那么证明距离最低点还有很远的距离，所以移动的距离就很大。第二个因素是我们事先自主定义的常数项 η 值，即步长。<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/c0fikGF2DA.png?imageslim" alt="mark"></p>
+<p>经过无数次迭代之后，参数会经过无数次更新，最终到达一个最低值。而当我们有多个feature时，即不仅有w和b时，同样不会影响梯度下降过程，其原理为：</p>
+<p><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/i3eBFegkbg.png?imageslim" alt="mark"></p>
+<h2 id="How’s-the-results"><a href="#How’s-the-results" class="headerlink" title="How’s the results?"></a>How’s the results?</h2><p>经过上面的步骤后，我们得到了一个函数f，但我们发现并不是所有数据都能很好的拟合函数，这就会造成很大的预测不准的情况，通过Loss Function也能看出，最优解的值依然很大，测试数据的表现也不好，所以我们就要想办法优化。</p>
+<p><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/9IKDCEfK56.png?imageslim" alt="mark"></p>
+<p>很容易想到，刚刚我们用了一次方程作为model，二次方程会不会更好一些呢，三次方程、四次方程呢？于是我们做了以下实验，用同样的方法，放到多次方程中。</p>
+<p><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/L4Gh3cgfm7.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/Ae4g6bEfKK.png?imageslim" alt="mark"></p>
+<h2 id="overfitting"><a href="#overfitting" class="headerlink" title="overfitting"></a>overfitting</h2><p>从上面的4幅图可以看出，虽然我们增加了函数次数后，可以使得training set 的error越来越小，但是test set的error并没有随着次数的增大而减小，甚至到5次时，结果大大超出了我们的预估，那么这种现象就叫做overfitting。</p>
+<p><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/C7C7Ad87eD.png?imageslim" alt="mark"></p>
+<p>由此可见，fuction并不是越复杂越好，我们需要根据实际情况来选择合适的fuction，而对于overfitting的应对办法，我们一般采用以下方法来解决：</p>
+<ul>
+<li>增加新特征，可以考虑加入进特征组合、高次特征，来增大假设空间;</li>
+<li>尝试非线性模型，比如核SVM 、决策树、DNN等模型;</li>
+<li>如果有正则项可以较小正则项参数 λ</li>
+<li>Boosting ,Boosting 往往会有较小的 Bias，比如 Gradient Boosting 等.</li>
+</ul>
+<h2 id="underfitting"><a href="#underfitting" class="headerlink" title="underfitting"></a>underfitting</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/DHJj85dL4K.png?imageslim" alt="mark"><br>有过拟合当然也少不了欠拟合了，对于欠拟合,我们一般采用以下方法解决：</p>
+<ul>
+<li>增加新特征，可以考虑加入进特征组合、高次特征，来增大假设空间;</li>
+<li>尝试非线性模型，比如核SVM 、决策树、DNN等模型;</li>
+<li>如果有正则项可以较小正则项参数 λ.</li>
+<li>Boosting ,Boosting 往往会有较小的 Bias，比如 Gradient Boosting 等.</li>
+</ul>
+<h2 id="交叉检验"><a href="#交叉检验" class="headerlink" title="交叉检验"></a>交叉检验</h2><p>当数据比较少是，留出一部分做交叉检验可能比较奢侈，还有只执行一次训练-测试来评估模型，会带有一些随机性，这些缺点都可以通过交叉检验克服，交叉检验对数据的划分如下：<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180627/Cc02gFb7aE.png?imageslim" alt="mark"></p>
+<h3 id="交叉检验的步骤："><a href="#交叉检验的步骤：" class="headerlink" title="交叉检验的步骤："></a>交叉检验的步骤：</h3><ol>
+<li>将数据分类训练集、验证集、测试集；</li>
+<li>选择模型和训练参数；</li>
+<li>使用训练集训练模型，在验证集中评估模型；</li>
+<li>针对不同的模型，重复2）- 3）的过程；</li>
+<li>选择最佳模型，使用训练集和验证集一起训练模型；</li>
+<li>使用测试集来最终测评模型。</li>
+</ol>
+<h2 id="关于正则"><a href="#关于正则" class="headerlink" title="关于正则"></a>关于正则</h2><p>在模型的损失函数中引入正则项，可用来防止过拟合，于是得到的优化形式如下：</p>
+<script type="math/tex; mode=display">
+w^*=argminwL(y,f(w,x))+λΩ(w)</script><p>这里 Ω(w) 即为正则项， λ  则为正则项的参数，通常为 Lp 的形式，即：</p>
+<script type="math/tex; mode=display">Ω(w)=||w||^p</script><p>实际应用中比较多的是 L1 与 L2 正则，L1 正则是 L0 正则的凸近似，这里 L0 正则即为权重参数 w 中值为 0 的个数，但是求解 L0 正则是个NP 难题，所以往往使用 L1 正则来近似 L0 , 来使得某些特征权重为 0 ，这样便得到了稀疏的的权重参数 w。</p>
+<hr>
       
     </div>
     
     
     
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="dik 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<div style="text-align:center;color: #ccc;font-size:14px;">
+</div>
+<br/>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<img src="http://kuangqi.me/images/cc.png" >
+<br/>
+<p style="font-size: 10px;line-height: 30px"><a href="http://dik111.github.io" style="color:#258FC6">dik's Blog</a> by <a href="http://dik111.github.io" style="color:#258FC6">Yuwei Zhan</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br/>
+由<a href="http://dik111.github.io" style="color:#258FC6">dik</a>创作并维护的<a href="http://dik111.github.io" style="color:#258FC6">dik's Blog</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br/>
+本文首发于<a href="http://dik111.github.io" style="color:#258FC6">dik's Blog</a> 博客（ <a href="http://dik111.github.io" style="color:#258FC6">http://dik111.github.io</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/23/我的第一篇博文/" rel="next" title="欢迎来到我的博客">
+                <i class="fa fa-chevron-left"></i> 欢迎来到我的博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
   </div>
 
 
@@ -489,7 +810,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hi-欢迎来到我的博客-我将在这里分享技术以及生活！"><span class="nav-number">1.</span> <span class="nav-text">Hi,欢迎来到我的博客,我将在这里分享技术以及生活！</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Regression-pokemons"><span class="nav-number">1.</span> <span class="nav-text">Regression-pokemons</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step1-选择Model"><span class="nav-number">2.</span> <span class="nav-text">Step1 选择Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step2-Goodness-of-function"><span class="nav-number">3.</span> <span class="nav-text">Step2 Goodness of function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step3-Best-Function"><span class="nav-number">4.</span> <span class="nav-text">Step3 Best Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How’s-the-results"><span class="nav-number">5.</span> <span class="nav-text">How’s the results?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overfitting"><span class="nav-number">6.</span> <span class="nav-text">overfitting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#underfitting"><span class="nav-number">7.</span> <span class="nav-text">underfitting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉检验"><span class="nav-number">8.</span> <span class="nav-text">交叉检验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉检验的步骤："><span class="nav-number">8.1.</span> <span class="nav-text">交叉检验的步骤：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于正则"><span class="nav-number">9.</span> <span class="nav-text">关于正则</span></a></li></ol></div>
             
 
           </div>
