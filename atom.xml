@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-01T10:00:01.570Z</updated>
+  <updated>2018-07-29T11:05:32.666Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>李宏毅机器学习笔记-3 Classification,Logistic Regression</title>
+    <link href="http://yoursite.com/2018/07/26/%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3-Classification%E3%80%81Logistic-Regression/"/>
+    <id>http://yoursite.com/2018/07/26/李宏毅机器学习笔记-3-Classification、Logistic-Regression/</id>
+    <published>2018-07-26T14:23:06.000Z</published>
+    <updated>2018-07-29T11:05:32.666Z</updated>
+    
+    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p class="description"></p><p><img src="https://" alt="" style="width:100%"></p><a id="more"></a><h1 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h1><p>分类算法在我们日常生活中随处可见：</p><ul><li>Credit Scoring<br>Input: income, savings, profession, age, past financial history ……<br>Output: accept or refuse</li><li>Medical Diagnosis<br>Input: current symptoms, age, gender, past medical history ……<br>Output: which kind of diseases</li><li>Handwritten character recognition<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/AkGlIbdGgc.png?imageslim" alt="mark"></li><li>Face recognition<br>Input: image of a face<br>output: person</li></ul><h2 id="Example-Application"><a href="#Example-Application" class="headerlink" title="Example Application"></a>Example Application</h2><p>在这节课程中，李宏毅老师通过宝可梦的HP值，Attack值，SP Atk值，SP Def值，Speed值等一系列值来预测宝可梦属于哪种类型。<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/8099K1GAfJ.png?imageslim" alt="mark"></p><h2 id="How-to-do-Classification"><a href="#How-to-do-Classification" class="headerlink" title="How to do Classification?"></a>How to do Classification?</h2><ul><li>Traning data for Classification<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/c26cgkJhEK.png?imageslim" alt="mark"></li></ul><h3 id="Classification-as-Regression"><a href="#Classification-as-Regression" class="headerlink" title="Classification as Regression?"></a>Classification as Regression?</h3><p>Binary classification as example<br>Training: Class 1 means the target is 1; Class 2 means the target is -1<br>Testing: closer to 1 → class 1; closer to -1 → class 2 </p><h2 id="Ideal-Alternatives-理想的替代品"><a href="#Ideal-Alternatives-理想的替代品" class="headerlink" title="Ideal Alternatives(理想的替代品)"></a>Ideal Alternatives(理想的替代品)</h2><ul><li>Function (Model):<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/egL5b6jCl3.png?imageslim" alt="mark"></li><li>Loss function:<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/f61LhjE1D9.png?imageslim" alt="mark"></li><li>Find the best funcion:<br>Example:Perceptron , SVM<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/ldDGiKk3Ei.png?imageslim" alt="mark"><br>在这里我们用线性回归算法进行分类，我们把接近-1的数据定义为class2,把接近1的数据定义为class1，以此作为分类，可以看到当数据远大于1时，绿色的直线慢慢往紫色的直线靠近了，因此在某种情况下，用线性回归进行分类可能会不太准确。<h2 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naive Bayes"></a>Naive Bayes</h2><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/cAl19gA77A.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/690BGedG7C.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/dmikm1mgLD.png?imageslim" alt="mark"><br>其中 <strong>mean μ</strong> 和 <strong>covariance matrix ∑</strong> 是决定形状的两个因素，而不同的参数，会有不同的形状：<br><img src="http://pav10d59g.bkt.clouddn.com/blog/180728/dj87mK6dmc.png?imageslim" alt="mark"></li></ul><h2 id="Probability-from-Class"><a href="#Probability-from-Class" class="headerlink" title="Probability from Class"></a>Probability from Class</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/h0m7DD8CmL.png?imageslim" alt="mark"></p><h3 id="那如何找到这个Gaussion-function呢？"><a href="#那如何找到这个Gaussion-function呢？" class="headerlink" title="那如何找到这个Gaussion function呢？"></a>那如何找到这个Gaussion function呢？</h3><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/jD3Eg7eici.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/L1cLAB0cDK.png?imageslim" alt="mark"></p><h2 id="Summery"><a href="#Summery" class="headerlink" title="Summery"></a>Summery</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/DF3L2L9aFA.png?imageslim" alt="mark"></p><h2 id="Probability-Distribution"><a href="#Probability-Distribution" class="headerlink" title="Probability Distribution"></a>Probability Distribution</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/2FHlmfB0FI.png?imageslim" alt="mark"></p><h1 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h1><h2 id="The-steps-of-Logistic-Regression"><a href="#The-steps-of-Logistic-Regression" class="headerlink" title="The steps of Logistic Regression"></a>The steps of Logistic Regression</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/C3kCa0d4Cd.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/a7F5I1i9FJ.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/9A96DEL9IL.png?imageslim" alt="mark"></p><h2 id="Logistic-Regression-VS-Linear-Regression"><a href="#Logistic-Regression-VS-Linear-Regression" class="headerlink" title="Logistic Regression VS Linear Regression"></a>Logistic Regression VS Linear Regression</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/cB393jDfIJ.png?imageslim" alt="mark"></p><h2 id="为什么不能用Logistic-Regression-Square-Error"><a href="#为什么不能用Logistic-Regression-Square-Error" class="headerlink" title="为什么不能用Logistic Regression+Square Error"></a>为什么不能用Logistic Regression+Square Error</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/f9kHgKj4Bd.png?imageslim" alt="mark"></p><h2 id="Cross-Entropy-v-s-Square-Error"><a href="#Cross-Entropy-v-s-Square-Error" class="headerlink" title="Cross Entropy v.s. Square Error"></a>Cross Entropy v.s. Square Error</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/B8aFe713FJ.png?imageslim" alt="mark"></p><h2 id="Discriminative（Logstic）-v-s-Generative（Gaussion）"><a href="#Discriminative（Logstic）-v-s-Generative（Gaussion）" class="headerlink" title="Discriminative（Logstic） v.s. Generative（Gaussion）"></a>Discriminative（Logstic） v.s. Generative（Gaussion）</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/BjFceKIEFF.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/bkh0iBek86.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/GGegFb7ECH.png?imageslim" alt="mark"></p><h2 id="Multi-class-Classification"><a href="#Multi-class-Classification" class="headerlink" title="Multi-class Classification"></a>Multi-class Classification</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/74i9FEki8K.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/KHa7mdjfg4.png?imageslim" alt="mark"></p><h2 id="Limitation-of-Logistic-Regression"><a href="#Limitation-of-Logistic-Regression" class="headerlink" title="Limitation of Logistic Regression"></a>Limitation of Logistic Regression</h2><p><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/2C76EfHHIk.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/AadIi6ge6E.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/7bB6beKdgH.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/181m216d0J.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/1I8ACL4525.png?imageslim" alt="mark"><br><img src="http://pav10d59g.bkt.clouddn.com/blog/180729/bF173Hj86c.png?imageslim" alt="mark"></p><hr>]]></content>
+    
+    <summary type="html">
+    
+      这是最近学习李宏毅老师机器学习入门的第三篇学习笔记
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>梯度下降算法实战</title>
@@ -79,28 +101,6 @@
     
     
       <category term="生活" scheme="http://yoursite.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2018/06/21/hello-world/"/>
-    <id>http://yoursite.com/2018/06/21/hello-world/</id>
-    <published>2018-06-21T14:55:26.507Z</published>
-    <updated>2018-06-23T10:47:44.136Z</updated>
-    
-    <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;br&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="搭建博客" scheme="http://yoursite.com/categories/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/"/>
-    
-    
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
     
   </entry>
   

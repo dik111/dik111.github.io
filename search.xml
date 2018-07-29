@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[李宏毅机器学习笔记-3 Classification,Logistic Regression]]></title>
+    <url>%2F2018%2F07%2F26%2F%E6%9D%8E%E5%AE%8F%E6%AF%85%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-3-Classification%E3%80%81Logistic-Regression%2F</url>
+    <content type="text"><![CDATA[Classification分类算法在我们日常生活中随处可见： Credit ScoringInput: income, savings, profession, age, past financial history ……Output: accept or refuse Medical DiagnosisInput: current symptoms, age, gender, past medical history ……Output: which kind of diseases Handwritten character recognition Face recognitionInput: image of a faceoutput: person Example Application在这节课程中，李宏毅老师通过宝可梦的HP值，Attack值，SP Atk值，SP Def值，Speed值等一系列值来预测宝可梦属于哪种类型。 How to do Classification? Traning data for Classification Classification as Regression?Binary classification as exampleTraining: Class 1 means the target is 1; Class 2 means the target is -1Testing: closer to 1 → class 1; closer to -1 → class 2 Ideal Alternatives(理想的替代品) Function (Model): Loss function: Find the best funcion:Example:Perceptron , SVM在这里我们用线性回归算法进行分类，我们把接近-1的数据定义为class2,把接近1的数据定义为class1，以此作为分类，可以看到当数据远大于1时，绿色的直线慢慢往紫色的直线靠近了，因此在某种情况下，用线性回归进行分类可能会不太准确。Naive Bayes其中 mean μ 和 covariance matrix ∑ 是决定形状的两个因素，而不同的参数，会有不同的形状： Probability from Class 那如何找到这个Gaussion function呢？ Summery Probability Distribution Logistic RegressionThe steps of Logistic Regression Logistic Regression VS Linear Regression 为什么不能用Logistic Regression+Square Error Cross Entropy v.s. Square Error Discriminative（Logstic） v.s. Generative（Gaussion） Multi-class Classification Limitation of Logistic Regression]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[梯度下降算法实战]]></title>
     <url>%2F2018%2F06%2F29%2F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%AE%97%E6%B3%95%E5%AE%9E%E6%88%98%2F</url>
     <content type="text"><![CDATA[在上一篇文章中，我们了解了梯度下降算法的原理，那么在这一篇文章中，我们将结合李宏毅机器学习入门的课后作业1，用python来实现梯度下降。 课后作业1内容&amp;数据集链接地址：https://ntumlta.github.io/2017fall-ml-hw1 载入数据1234567891011import pandas as pd import numpy as npimport matplotlib.pyplot as pltimport seaborn as snssns.set_style('darkgrid') #设定绘图的背景样式sns.set_palette('muted') #设定图表的颜色板from sklearn.linear_model import SGDRegressorfrom sklearn.cross_validation import train_test_splitfrom sklearn.model_selection import GridSearchCVdata = pd.read_csv('train.csv',encoding='big5')#用pandas读取csv文件 可以看到tranning set由这样的数据组成，我们的目标就是通过AMB_TEMP,CH4等一系列数据，预估出PM2.5的值。 数据清洗&amp;处理12345678910111213del data['datetime'] #删除无用指标datetimedel data['item']#删除无用指标itemdata.set_index(['obvservations'],inplace=True) data6 = pd.DataFrame()for i in range(0,240):#数据处理 data3 = data.iloc[i*18:(i+1)*18,:] data4 = data.iloc[(i+1)*18:(i+2)*18,:] data5 = pd.concat([data3,data4],axis=1) data6 = pd.concat([data5,data6],axis = 1)data7 = data6.Tdata8 = data7.dropna(how = 'all')del data8['RAINFALL']data9 = pd.DataFrame(data8,dtype='float') 经过一番处理之后，数据变成了这样的形式： 描述性分析12345678910111213plt.figure(figsize=(10, 6))plt.subplot(2, 2, 1)plt.title('AMB_TEMP')plt.scatter(data9['AMB_TEMP'],data9['PM2.5'])plt.subplot(2, 2, 2)plt.title('CH4')plt.scatter(data9['CH4'],data9['PM2.5'])plt.subplot(2, 2, 3)plt.title('CO')plt.scatter(data9['CO'],data9['PM2.5'])plt.subplot(2, 2, 4)plt.title('NMHC')plt.scatter(data9['NMHC'],data9['PM2.5']) 12345678910111213plt.figure(figsize=(10, 6))plt.subplot(2, 2, 1)plt.title('NO')plt.scatter(data9['NO'],data9['PM2.5'])plt.subplot(2, 2, 2)plt.title('NO2')plt.scatter(data9['NO2'],data9['PM2.5'])plt.subplot(2, 2, 3)plt.title('NOx')plt.scatter(data9['NOx'],data9['PM2.5'])plt.subplot(2, 2, 4)plt.title('O3')plt.scatter(data9['O3'],data9['PM2.5']) 12345678910111213plt.figure(figsize=(10, 6))plt.subplot(2, 2, 1)plt.title('WD_HR')plt.scatter(data9['WD_HR'],data9['PM2.5'])plt.subplot(2, 2, 2)plt.title('WIND_DIREC')plt.scatter(data9['WIND_DIREC'],data9['PM2.5'])plt.subplot(2, 2, 3)plt.title('WIND_SPEED')plt.scatter(data9['WIND_SPEED'],data9['PM2.5'])plt.subplot(2, 2, 4)plt.title('WS_HR')plt.scatter(data9['WS_HR'],data9['PM2.5']) 相关度计算12345internal_chars =['AMB_TEMP','CH4','CO','NMHC','NO','NO2','NOx','O3','PM10','PM2.5','RH','SO2','THC','WD_HR','WIND_DIREC','WIND_SPEED','WS_HR',]corrmat = data9[internal_chars].corr() #计算相关系数f , ax = plt.subplots(figsize = (20,12)) #设置图标尺寸大小plt.xticks(rotation = '0')sns.heatmap(corrmat, square=False, linewidths=.8, annot=True) #设置热力图参数 建模分析-预测PM2.5123456789X = data9[['PM10','NO2']]y = data9[['PM2.5']]scaler = StandardScaler()X = scaler.fit_transform(X)y = scaler.fit_transform(y)X_train,X_test,y_train,y_test = train_test_split(X,y,random_state=1)clf = SGDRegressor(loss='epsilon_insensitive',alpha=0.01,penalty='l2',max_iter=10000,shuffle=True,n_iter=np.ceil(10**6/8622))clf.fit(X_train,y_train)clf.score(X,y) 其中loss = ‘epsilon_insensitive’ 表示用的最小二乘法，alpha = 0.01表示为初始的步长,max_iter=10000表示最大的迭代次数。最后模型的评分为0.62分，可能是数据量有点太少了，在以后的文章中，会继续把它优化！]]></content>
@@ -31,17 +42,6 @@
       </categories>
       <tags>
         <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2018%2F06%2F21%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
-      <categories>
-        <category>搭建博客</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
