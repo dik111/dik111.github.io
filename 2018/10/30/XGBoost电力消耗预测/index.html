@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/favicon.png?v=5.1.4" color="#222">
+
+
+  <link rel="manifest" href="/images/favicon.png">
+
+
+
+
+  <meta name="keywords" content="python,机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="dik's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="用python机器学习预测电力消耗的问题">
+<meta name="keywords" content="python,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电力消耗预测">
+<meta property="og:url" content="http://yoursite.com/2018/10/30/XGBoost电力消耗预测/index.html">
+<meta property="og:site_name" content="dik&#39;s Blog">
+<meta property="og:description" content="用python机器学习预测电力消耗的问题">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https:///">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307112734.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307113458.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307114750.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307120806.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307141849.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307143807.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307144905.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150205.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150226.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150238.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150250.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150302.png">
+<meta property="og:image" content="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307152339.png">
+<meta property="og:updated_time" content="2019-03-17T07:34:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电力消耗预测">
+<meta name="twitter:description" content="用python机器学习预测电力消耗的问题">
+<meta name="twitter:image" content="https:///">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/10/30/XGBoost电力消耗预测/"/>
+
+
+
+
+
+  <title>电力消耗预测 | dik's Blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/dik111"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">dik's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-留言板">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br />
+            
+            留言板
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/30/XGBoost电力消耗预测/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="dik">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="dik's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">电力消耗预测</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-30T20:50:43+08:00">
+                2018-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/30/XGBoost电力消耗预测/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/30/XGBoost电力消耗预测/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/10/30/XGBoost电力消耗预测/" class="leancloud_visitors" data-flag-title="电力消耗预测">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+             
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,023
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  用python机器学习预测电力消耗的问题
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p class="description"></p>
+
+<p><img src="https://" alt="" style="width:100%"></p>
+<a id="more"></a>
+<h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>企业用电需求预测一直是电力市场营销活动业务难点，大数据与云计算、人工智能等新技术相结合，给传统行业转型升级带来了新的机遇和思考。本项目主要用到开放扬中市高新区1000多家企业的历史用电量数据，通过模型算法预测该地区下一个月的每日总用电量。</p>
+<h2 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h2><p>本项目主要用到开放扬中市高新区1000多家企业的历史用电量数据，直接在官网下载csv文件即可。</p>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307112734.png" alt=""><br>从上面的图可以看到，原始数据主要由3个维度组成：user_id,record_date,power_consumption,分别对应企业ID，日期以及用电量</p>
+<h3 id="日期格式转换"><a href="#日期格式转换" class="headerlink" title="日期格式转换"></a>日期格式转换</h3><p>因为原数据的日期是strting类型，所以我们需要把它格式转换<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">f = open(<span class="string">'电力数据power_AI.csv'</span>)</span><br><span class="line">df = pd.read_csv(f)</span><br><span class="line">df[<span class="string">'record_date'</span>] = pd.to_datetime(df[<span class="string">'record_date'</span>])</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307113458.png" alt=""></p>
+<h3 id="统计每日均值"><a href="#统计每日均值" class="headerlink" title="统计每日均值"></a>统计每日均值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base_df = df[[&apos;record_date&apos;,&apos;power_consumption&apos;]].groupby(by=&apos;record_date&apos;).agg(&apos;sum&apos;)</span><br><span class="line">base_df = base_df.reset_index()</span><br><span class="line">base_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307114750.png" alt=""></p>
+<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><p>因为数据只有3个维度，可能会造成欠拟合的情况，所以我们利用日期构建一些特征。</p>
+<h3 id="增加日期特征"><a href="#增加日期特征" class="headerlink" title="增加日期特征"></a>增加日期特征</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">base_df[<span class="string">'dow'</span>] = base_df[<span class="string">'record_date'</span>].apply(<span class="keyword">lambda</span> x: x.dayofweek)</span><br><span class="line">base_df[<span class="string">'doy'</span>] = base_df[<span class="string">'record_date'</span>].apply(<span class="keyword">lambda</span> x: x.dayofyear)</span><br><span class="line">base_df[<span class="string">'day'</span>] = base_df[<span class="string">'record_date'</span>].apply(<span class="keyword">lambda</span> x: x.day)</span><br><span class="line">base_df[<span class="string">'month'</span>] = base_df[<span class="string">'record_date'</span>].apply(<span class="keyword">lambda</span> x: x.month)</span><br><span class="line">base_df[<span class="string">'year'</span>] = base_df[<span class="string">'record_date'</span>].apply(<span class="keyword">lambda</span> x: x.year)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">map_season</span><span class="params">(month)</span>:</span></span><br><span class="line">    month_dic = &#123;<span class="number">1</span>:<span class="number">1</span>, <span class="number">2</span>:<span class="number">1</span>, <span class="number">3</span>:<span class="number">2</span>, <span class="number">4</span>:<span class="number">2</span>, <span class="number">5</span>:<span class="number">3</span>, <span class="number">6</span>:<span class="number">3</span>, <span class="number">7</span>:<span class="number">3</span>, <span class="number">8</span>:<span class="number">3</span>, <span class="number">9</span>:<span class="number">3</span>, <span class="number">10</span>:<span class="number">4</span>, <span class="number">11</span>:<span class="number">4</span>, <span class="number">12</span>:<span class="number">1</span>&#125;</span><br><span class="line">    <span class="keyword">return</span> month_dic[month]</span><br><span class="line"></span><br><span class="line">base_df[<span class="string">'season'</span>] = base_df[<span class="string">'month'</span>].apply(<span class="keyword">lambda</span> x: map_season(x))</span><br><span class="line">base_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307120806.png" alt=""></p>
+<h3 id="增加月度特征"><a href="#增加月度特征" class="headerlink" title="增加月度特征"></a>增加月度特征</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">base_df_stats = new_df = base_df[[<span class="string">'power_consumption'</span>,<span class="string">'year'</span>,<span class="string">'month'</span>]].groupby(by=[<span class="string">'year'</span>, <span class="string">'month'</span>]).agg([<span class="string">'mean'</span>, <span class="string">'std'</span>])</span><br><span class="line">base_df_stats.columns = base_df_stats.columns.droplevel(<span class="number">0</span>)</span><br><span class="line">base_df_stats = base_df_stats.reset_index()</span><br><span class="line">base_df_stats[<span class="string">'1_m_mean'</span>] = base_df_stats[<span class="string">'mean'</span>].shift(<span class="number">1</span>)</span><br><span class="line">base_df_stats[<span class="string">'2_m_mean'</span>] = base_df_stats[<span class="string">'mean'</span>].shift(<span class="number">2</span>)</span><br><span class="line">base_df_stats[<span class="string">'1_m_std'</span>] = base_df_stats[<span class="string">'std'</span>].shift(<span class="number">1</span>)</span><br><span class="line">base_df_stats[<span class="string">'2_m_std'</span>] = base_df_stats[<span class="string">'std'</span>].shift(<span class="number">2</span>)</span><br><span class="line">base_df_stats.head()</span><br></pre></td></tr></table></figure>
+<p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307141849.png" alt=""></p>
+<h3 id="相关性检测"><a href="#相关性检测" class="headerlink" title="相关性检测"></a>相关性检测</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">sns.set_style(<span class="string">'darkgrid'</span>) <span class="comment">#设定绘图的背景样式</span></span><br><span class="line">sns.set_palette(<span class="string">'muted'</span>) <span class="comment">#设定图表的颜色板</span></span><br><span class="line">plt.style.use(<span class="string">'ggplot'</span>)</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> mpl</span><br><span class="line">mpl.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'FangSong'</span>] <span class="comment"># 指定默认字体</span></span><br><span class="line">mpl.rcParams[<span class="string">'axes.unicode_minus'</span>] = <span class="keyword">False</span> <span class="comment"># 解决保存图像是负号'-'显示为方块的问题</span></span><br><span class="line">corrmat = data_df[internal_chars].corr() <span class="comment">#计算相关系数</span></span><br><span class="line">f , ax = plt.subplots(figsize = (<span class="number">10</span>,<span class="number">6</span>)) <span class="comment">#设置图标尺寸大小</span></span><br><span class="line">plt.xticks(rotation = <span class="string">'0'</span>)</span><br><span class="line">sns.heatmap(corrmat, square=<span class="keyword">False</span>, linewidths=<span class="number">.8</span>, annot=<span class="keyword">True</span>) <span class="comment">#设置热力图参数</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307143807.png" alt=""></p>
+<h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><h3 id="企业与用电量的关系"><a href="#企业与用电量的关系" class="headerlink" title="企业与用电量的关系"></a>企业与用电量的关系</h3><p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307144905.png" alt=""><br>可以看到ID为1416,174,175的企业用电量很大<br>如果有必要可以把这3个企业单独分为1类做处理。</p>
+<h3 id="时间维度与用电量的关系"><a href="#时间维度与用电量的关系" class="headerlink" title="时间维度与用电量的关系"></a>时间维度与用电量的关系</h3><p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150205.png" alt=""><br><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150226.png" alt=""><br><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150238.png" alt=""><br><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150250.png" alt=""><br><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307150302.png" alt=""></p>
+<h2 id="数据建模"><a href="#数据建模" class="headerlink" title="数据建模"></a>数据建模</h2><p>在这个项目中，我们主要用到XGboost这个算法模型</p>
+<h3 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h3><p>首先我们用模型默认的参数进行预测<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">df_finall = pd.read_excel(<span class="string">'data_all.xlsx'</span>,sheet_name=<span class="string">'V2'</span>)<span class="comment">#加载数据</span></span><br><span class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> KFold, train_test_split</span><br><span class="line"><span class="keyword">from</span> xgboost <span class="keyword">import</span> XGBRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> KFold, train_test_split</span><br><span class="line">X = df_finall.iloc[:,<span class="number">1</span>:<span class="number">-1</span>]</span><br><span class="line">X[[<span class="string">'dow'</span>,<span class="string">'doy'</span>,<span class="string">'day'</span>,<span class="string">'month'</span>,<span class="string">'year'</span>,<span class="string">'season'</span>]] = X[[<span class="string">'dow'</span>,<span class="string">'doy'</span>,<span class="string">'day'</span>,<span class="string">'month'</span>,<span class="string">'year'</span>,<span class="string">'season'</span>]]\</span><br><span class="line">.astype(str)</span><br><span class="line">y = df_finall.iloc[:,<span class="number">-1</span>]</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X.values, y.values, test_size=<span class="number">0.3</span>)</span><br><span class="line">xgb1 = XGBRegressor()</span><br><span class="line">xgb1.fit(X_train,y_train)</span><br><span class="line">test_predictions = xgb1.predict(X_test)</span><br><span class="line">r2 = metrics.r2_score(y_test, test_predictions)</span><br><span class="line">r2</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://dik111-1258101294.cos.ap-guangzhou.myqcloud.com/20190307152339.png" alt=""></p>
+<h3 id="参数微调"><a href="#参数微调" class="headerlink" title="参数微调"></a>参数微调</h3><p>因为XGBoost自带的参数较多，所以我们采用网格搜索的方式对参数进行微调。</p>
+<ul>
+<li><p>Step 1: 选择一组初始参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xgb1 = XGBRegressor(eta=<span class="number">0.01</span>, num_boost_round=<span class="number">50</span>, colsample_bytree=<span class="number">0.5</span>, subsample=<span class="number">0.5</span>,objective=<span class="string">'reg:linear'</span>,seed=<span class="number">27</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Step 2: 改变 <code>max_depth</code> 和 <code>min_child_weight</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xgb_param_grid = &#123;<span class="string">'max_depth'</span>: list(range(<span class="number">4</span>,<span class="number">9</span>)), <span class="string">'min_child_weight'</span>: list((<span class="number">1</span>,<span class="number">3</span>,<span class="number">6</span>))&#125;</span><br><span class="line">grid = GridSearchCV(XGBRegressor(eta=<span class="number">0.01</span>, num_boost_round=<span class="number">50</span>, colsample_bytree=<span class="number">0.5</span>, subsample=<span class="number">0.5</span>,objective=<span class="string">'reg:linear'</span>,seed=<span class="number">27</span>),</span><br><span class="line">                param_grid=xgb_param_grid, cv=<span class="number">5</span>)</span><br><span class="line">grid.fit(X_train, y_train)</span><br><span class="line">grid.grid_scores_, grid.best_params_, grid.best_score_</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">([mean: 0.66566, std: 0.11042, params: &#123;&apos;max_depth&apos;: 4, &apos;min_child_weight&apos;: 1&#125;,</span><br><span class="line">  mean: 0.65945, std: 0.10346, params: &#123;&apos;max_depth&apos;: 4, &apos;min_child_weight&apos;: 3&#125;,</span><br><span class="line">  mean: 0.65507, std: 0.08334, params: &#123;&apos;max_depth&apos;: 4, &apos;min_child_weight&apos;: 6&#125;,</span><br><span class="line">  mean: 0.67838, std: 0.09230, params: &#123;&apos;max_depth&apos;: 5, &apos;min_child_weight&apos;: 1&#125;,</span><br><span class="line">  mean: 0.65974, std: 0.09295, params: &#123;&apos;max_depth&apos;: 5, &apos;min_child_weight&apos;: 3&#125;,</span><br><span class="line">  mean: 0.65113, std: 0.08137, params: &#123;&apos;max_depth&apos;: 5, &apos;min_child_weight&apos;: 6&#125;,</span><br><span class="line">  mean: 0.68250, std: 0.08758, params: &#123;&apos;max_depth&apos;: 6, &apos;min_child_weight&apos;: 1&#125;,</span><br><span class="line">  mean: 0.66546, std: 0.10096, params: &#123;&apos;max_depth&apos;: 6, &apos;min_child_weight&apos;: 3&#125;,</span><br><span class="line">  mean: 0.65293, std: 0.09142, params: &#123;&apos;max_depth&apos;: 6, &apos;min_child_weight&apos;: 6&#125;,</span><br><span class="line">  mean: 0.67734, std: 0.08246, params: &#123;&apos;max_depth&apos;: 7, &apos;min_child_weight&apos;: 1&#125;,</span><br><span class="line">  mean: 0.66691, std: 0.09677, params: &#123;&apos;max_depth&apos;: 7, &apos;min_child_weight&apos;: 3&#125;,</span><br><span class="line">  mean: 0.66142, std: 0.08414, params: &#123;&apos;max_depth&apos;: 7, &apos;min_child_weight&apos;: 6&#125;,</span><br><span class="line">  mean: 0.67381, std: 0.11030, params: &#123;&apos;max_depth&apos;: 8, &apos;min_child_weight&apos;: 1&#125;,</span><br><span class="line">  mean: 0.67931, std: 0.09550, params: &#123;&apos;max_depth&apos;: 8, &apos;min_child_weight&apos;: 3&#125;,</span><br><span class="line">  mean: 0.66090, std: 0.08821, params: &#123;&apos;max_depth&apos;: 8, &apos;min_child_weight&apos;: 6&#125;],</span><br><span class="line"> &#123;&apos;max_depth&apos;: 6, &apos;min_child_weight&apos;: 1&#125;,</span><br><span class="line"> 0.6825025931707269)</span><br></pre></td></tr></table></figure>
+<p>网格搜索发现的最佳结果:<br>{‘max_depth’: 6, ‘min_child_weight’: 1}</p>
+<ul>
+<li>Step 3: 调节 <code>gamma</code> 降低模型过拟合风险.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xgb_param_grid = &#123;<span class="string">'gamma'</span>:[ <span class="number">0.01</span> * i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">5</span>)]&#125;</span><br><span class="line">grid = GridSearchCV(XGBRegressor(eta=<span class="number">0.01</span>, num_boost_round=<span class="number">50</span>, colsample_bytree=<span class="number">0.5</span>, subsample=<span class="number">0.5</span>,objective=<span class="string">'reg:linear'</span>,seed=<span class="number">27</span>,max_depth=<span class="number">7</span>,min_child_weight=<span class="number">1</span>),</span><br><span class="line">                param_grid=xgb_param_grid, cv=<span class="number">5</span>)</span><br><span class="line">grid.fit(X_train, y_train)</span><br><span class="line">grid.grid_scores_, grid.best_params_, grid.best_score_</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">([mean: 0.67462, std: 0.09512, params: &#123;&apos;gamma&apos;: 0.0&#125;,</span><br><span class="line">  mean: 0.67462, std: 0.09512, params: &#123;&apos;gamma&apos;: 0.01&#125;,</span><br><span class="line">  mean: 0.67462, std: 0.09512, params: &#123;&apos;gamma&apos;: 0.02&#125;,</span><br><span class="line">  mean: 0.67462, std: 0.09512, params: &#123;&apos;gamma&apos;: 0.03&#125;,</span><br><span class="line">  mean: 0.67462, std: 0.09512, params: &#123;&apos;gamma&apos;: 0.04&#125;],</span><br><span class="line"> &#123;&apos;gamma&apos;: 0.0&#125;,</span><br><span class="line"> 0.6746192263207629)</span><br></pre></td></tr></table></figure>
+<p>网格搜索发现的最佳结果:<br>{‘gamma’: 0.0}</p>
+<ul>
+<li>Step 4: 调节 <code>subsample</code> 和 <code>colsample_bytree</code> 改变数据采样策略.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">xgb_param_grid = &#123;<span class="string">'subsample'</span>:[ <span class="number">0.1</span> * i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>,<span class="number">10</span>)],</span><br><span class="line">                      <span class="string">'colsample_bytree'</span>:[ <span class="number">0.1</span> * i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>,<span class="number">10</span>)]&#125;</span><br><span class="line">grid = GridSearchCV(XGBRegressor(eta=<span class="number">0.01</span>, num_boost_round=<span class="number">50</span>, colsample_bytree=<span class="number">0.5</span>, subsample=<span class="number">0.5</span>,objective=<span class="string">'reg:linear'</span>,seed=<span class="number">27</span>,max_depth=<span class="number">7</span>,</span><br><span class="line">                                 min_child_weight=<span class="number">1</span>,gamma=<span class="number">0</span>),</span><br><span class="line">                param_grid=xgb_param_grid, cv=<span class="number">5</span>)</span><br><span class="line">grid.fit(X_train, y_train)</span><br><span class="line">grid.grid_scores_, grid.best_params_, grid.best_score_</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">([mean: 0.67014, std: 0.13270, params: &#123;&apos;colsample_bytree&apos;: 0.6000000000000001, &apos;subsample&apos;: 0.6000000000000001&#125;,</span><br><span class="line">  mean: 0.67302, std: 0.10802, params: &#123;&apos;colsample_bytree&apos;: 0.6000000000000001, &apos;subsample&apos;: 0.7000000000000001&#125;,</span><br><span class="line">  mean: 0.66858, std: 0.11634, params: &#123;&apos;colsample_bytree&apos;: 0.6000000000000001, &apos;subsample&apos;: 0.8&#125;,</span><br><span class="line">  mean: 0.67034, std: 0.11901, params: &#123;&apos;colsample_bytree&apos;: 0.6000000000000001, &apos;subsample&apos;: 0.9&#125;,</span><br><span class="line">  mean: 0.66074, std: 0.12567, params: &#123;&apos;colsample_bytree&apos;: 0.7000000000000001, &apos;subsample&apos;: 0.6000000000000001&#125;,</span><br><span class="line">  mean: 0.67163, std: 0.11620, params: &#123;&apos;colsample_bytree&apos;: 0.7000000000000001, &apos;subsample&apos;: 0.7000000000000001&#125;,</span><br><span class="line">  mean: 0.67011, std: 0.11888, params: &#123;&apos;colsample_bytree&apos;: 0.7000000000000001, &apos;subsample&apos;: 0.8&#125;,</span><br><span class="line">  mean: 0.67345, std: 0.10611, params: &#123;&apos;colsample_bytree&apos;: 0.7000000000000001, &apos;subsample&apos;: 0.9&#125;,</span><br><span class="line">  mean: 0.67388, std: 0.11610, params: &#123;&apos;colsample_bytree&apos;: 0.8, &apos;subsample&apos;: 0.6000000000000001&#125;,</span><br><span class="line">  mean: 0.67462, std: 0.10752, params: &#123;&apos;colsample_bytree&apos;: 0.8, &apos;subsample&apos;: 0.7000000000000001&#125;,</span><br><span class="line">  mean: 0.68473, std: 0.10995, params: &#123;&apos;colsample_bytree&apos;: 0.8, &apos;subsample&apos;: 0.8&#125;,</span><br><span class="line">  mean: 0.69456, std: 0.08956, params: &#123;&apos;colsample_bytree&apos;: 0.8, &apos;subsample&apos;: 0.9&#125;,</span><br><span class="line">  mean: 0.66677, std: 0.11420, params: &#123;&apos;colsample_bytree&apos;: 0.9, &apos;subsample&apos;: 0.6000000000000001&#125;,</span><br><span class="line">  mean: 0.66556, std: 0.10918, params: &#123;&apos;colsample_bytree&apos;: 0.9, &apos;subsample&apos;: 0.7000000000000001&#125;,</span><br><span class="line">  mean: 0.67706, std: 0.11681, params: &#123;&apos;colsample_bytree&apos;: 0.9, &apos;subsample&apos;: 0.8&#125;,</span><br><span class="line">  mean: 0.67529, std: 0.11429, params: &#123;&apos;colsample_bytree&apos;: 0.9, &apos;subsample&apos;: 0.9&#125;],</span><br><span class="line"> &#123;&apos;colsample_bytree&apos;: 0.8, &apos;subsample&apos;: 0.9&#125;,</span><br><span class="line"> 0.6945571414092301)</span><br></pre></td></tr></table></figure>
+<p>网格搜索发现的最佳结果:<br>{‘colsample_bytree’: 0.8, ‘subsample’: 0.9}</p>
+<ul>
+<li>Step 5: 调节学习率 <code>learning_rate</code>.<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xgb_param_grid = &#123;<span class="string">'learning_rate'</span>:[<span class="number">0.6</span>,<span class="number">0.5</span>,<span class="number">0.4</span>,<span class="number">0.3</span>,<span class="number">0.2</span>,<span class="number">0.1</span>,<span class="number">0.01</span>,<span class="number">0.001</span>]&#125;</span><br><span class="line">grid = GridSearchCV(XGBRegressor( num_boost_round=<span class="number">50</span>,objective=<span class="string">'reg:linear'</span>,seed=<span class="number">27</span>,max_depth=<span class="number">7</span>,</span><br><span class="line">                                 min_child_weight=<span class="number">1</span>,gamma=<span class="number">0</span>,colsample_bytree=<span class="number">0.8</span>,subsample=<span class="number">0.9</span>),param_grid=xgb_param_grid, cv=<span class="number">5</span>)</span><br><span class="line">grid.fit(X_train, y_train)</span><br><span class="line">grid.grid_scores_, grid.best_params_, grid.best_score_</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">([mean: 0.56345, std: 0.18185, params: &#123;&apos;learning_rate&apos;: 0.6&#125;,</span><br><span class="line">  mean: 0.60402, std: 0.16560, params: &#123;&apos;learning_rate&apos;: 0.5&#125;,</span><br><span class="line">  mean: 0.67215, std: 0.13258, params: &#123;&apos;learning_rate&apos;: 0.4&#125;,</span><br><span class="line">  mean: 0.63116, std: 0.13087, params: &#123;&apos;learning_rate&apos;: 0.3&#125;,</span><br><span class="line">  mean: 0.62305, std: 0.16146, params: &#123;&apos;learning_rate&apos;: 0.2&#125;,</span><br><span class="line">  mean: 0.69456, std: 0.08956, params: &#123;&apos;learning_rate&apos;: 0.1&#125;,</span><br><span class="line">  mean: -12.66985, std: 4.34214, params: &#123;&apos;learning_rate&apos;: 0.01&#125;,</span><br><span class="line">  mean: -77.40167, std: 26.16110, params: &#123;&apos;learning_rate&apos;: 0.001&#125;],</span><br><span class="line"> &#123;&apos;learning_rate&apos;: 0.1&#125;,</span><br><span class="line"> 0.6945571414092301)</span><br></pre></td></tr></table></figure>
+<p>网格搜索发现的最佳结果:<br>{‘learning_rate’: 0.1}</p>
+<ul>
+<li>step 6:调节<code>n_estimators</code>的棵数<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xgb_param_grid = &#123;<span class="string">'n_estimators'</span>:[<span class="number">50</span>,<span class="number">100</span>,<span class="number">200</span>,<span class="number">300</span>,<span class="number">400</span>,<span class="number">500</span>]&#125;</span><br><span class="line">grid = GridSearchCV(XGBRegressor( learning_rate=<span class="number">0.1</span>,objective=<span class="string">'reg:linear'</span>,seed=<span class="number">27</span>,max_depth=<span class="number">7</span>,</span><br><span class="line">                                 min_child_weight=<span class="number">1</span>,gamma=<span class="number">0</span>,colsample_bytree=<span class="number">0.8</span>,subsample=<span class="number">0.9</span>),param_grid=xgb_param_grid, cv=<span class="number">5</span>)</span><br><span class="line">grid.fit(X_train, y_train)</span><br><span class="line">grid.grid_scores_, grid.best_params_, grid.best_score_</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">([mean: 0.69015, std: 0.08067, params: &#123;&apos;n_estimators&apos;: 50&#125;,</span><br><span class="line">  mean: 0.69456, std: 0.08956, params: &#123;&apos;n_estimators&apos;: 100&#125;,</span><br><span class="line">  mean: 0.69296, std: 0.09306, params: &#123;&apos;n_estimators&apos;: 200&#125;,</span><br><span class="line">  mean: 0.69270, std: 0.09327, params: &#123;&apos;n_estimators&apos;: 300&#125;,</span><br><span class="line">  mean: 0.69269, std: 0.09334, params: &#123;&apos;n_estimators&apos;: 400&#125;,</span><br><span class="line">  mean: 0.69270, std: 0.09335, params: &#123;&apos;n_estimators&apos;: 500&#125;],</span><br><span class="line"> &#123;&apos;n_estimators&apos;: 100&#125;,</span><br><span class="line"> 0.6945571414092301)</span><br></pre></td></tr></table></figure>
+<p>网格搜索发现的最佳结果:<br>{‘n_estimators’: 100}<br>模型最终的参数为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">XGBRegressor( learning_rate=0.1,</span><br><span class="line">               objective=&apos;reg:linear&apos;,</span><br><span class="line">               seed=27,max_depth=7,</span><br><span class="line">               min_child_weight=1,</span><br><span class="line">               gamma=0,</span><br><span class="line">               colsample_bytree=0.8,</span><br><span class="line">               subsample=0.9)</span><br></pre></td></tr></table></figure></p>
+<p>最终评分：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xgb3 = XGBRegressor( learning_rate=<span class="number">0.1</span>,objective=<span class="string">'reg:linear'</span>,seed=<span class="number">27</span>,max_depth=<span class="number">7</span>,</span><br><span class="line">                                 min_child_weight=<span class="number">1</span>,gamma=<span class="number">0</span>,colsample_bytree=<span class="number">0.8</span>,subsample=<span class="number">0.9</span>)</span><br><span class="line">xgb3.fit(X_train,y_train)</span><br><span class="line">test_predictions = xgb3.predict(X_test)</span><br><span class="line">r2 = metrics.r2_score(y_test, test_predictions)</span><br><span class="line">r2</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.7133043132603486</span><br></pre></td></tr></table></figure>
+<hr>
+      
+    </div>
+    
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="dik 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+    <div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+<div style="text-align:center;color: #ccc;font-size:14px;">
+</div>
+<br/>
+<div style="border: 1px solid black">
+<div style="margin-left:10px">
+<span style="font-weight:blod">版权声明</span>
+<img src="http://kuangqi.me/images/cc.png" >
+<br/>
+<p style="font-size: 10px;line-height: 30px"><a href="http://dik111.github.io" style="color:#258FC6">dik's Blog</a> by <a href="http://dik111.github.io" style="color:#258FC6">Yuwei Zhan</a> is licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">Creative Commons BY-NC-ND 4.0 International License</a>.<br/>
+由<a href="http://dik111.github.io" style="color:#258FC6">dik</a>创作并维护的<a href="http://dik111.github.io" style="color:#258FC6">dik's Blog</a>博客采用<a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:#258FC6">创作共用保留署名-非商业-禁止演绎4.0国际许可证</a>。<br/>
+本文首发于<a href="http://dik111.github.io" style="color:#258FC6">dik's Blog</a> 博客（ <a href="http://dik111.github.io" style="color:#258FC6">http://dik111.github.io</a> ），版权所有，侵权必究。</p>
+</div>
+</div>
+
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/14/机器学习-决策树-随机森林算法实战/" rel="next" title="机器学习-决策树&随机森林算法笔记与实战">
+                <i class="fa fa-chevron-left"></i> 机器学习-决策树&随机森林算法笔记与实战
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/11/CS224n笔记-自然语言处理与深度学习简介/" rel="prev" title="CS224n笔记 自然语言处理与深度学习简介">
+                CS224n笔记 自然语言处理与深度学习简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+            <a href="/" class="site-author-image" rel="start" style="border:none">
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/avatar.png"
+                alt="dik" />
+            </a>
+            
+              <p class="site-author-name" itemprop="name">dik</p>
+              <p class="site-description motion-element" itemprop="description">大数据开发、Web开发、分享生活！</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dik111" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:195812208@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/dik-85/activities" target="_blank" title="知乎">
+                      
+                        <i class="fa fa-fw fa-gratipay"></i>知乎</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/qq_40717846" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-copyright"></i>CSDN</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+         
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背景"><span class="nav-number">1.</span> <span class="nav-text">项目背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据采集"><span class="nav-number">2.</span> <span class="nav-text">数据采集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据处理"><span class="nav-number">3.</span> <span class="nav-text">数据处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#日期格式转换"><span class="nav-number">3.1.</span> <span class="nav-text">日期格式转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统计每日均值"><span class="nav-number">3.2.</span> <span class="nav-text">统计每日均值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">4.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增加日期特征"><span class="nav-number">4.1.</span> <span class="nav-text">增加日期特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加月度特征"><span class="nav-number">4.2.</span> <span class="nav-text">增加月度特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关性检测"><span class="nav-number">4.3.</span> <span class="nav-text">相关性检测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析"><span class="nav-number">5.</span> <span class="nav-text">数据分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#企业与用电量的关系"><span class="nav-number">5.1.</span> <span class="nav-text">企业与用电量的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间维度与用电量的关系"><span class="nav-number">5.2.</span> <span class="nav-text">时间维度与用电量的关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据建模"><span class="nav-number">6.</span> <span class="nav-text">数据建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#训练模型"><span class="nav-number">6.1.</span> <span class="nav-text">训练模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数微调"><span class="nav-number">6.2.</span> <span class="nav-text">参数微调</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">dik</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共22.0k字</span>
+</div>
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'qaQlcHGQJxNkicHqPtBtYx8g-gzGzoHsz',
+        appKey: 'V6lJvnVzUanwKTImBeFs3KIO',
+        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("qaQlcHGQJxNkicHqPtBtYx8g-gzGzoHsz", "V6lJvnVzUanwKTImBeFs3KIO");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+ 
+<script type="text/javascript"
+color="0, 0, 255" opacity='0.7' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":80,"height":200},"mobile":{"show":false}});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
